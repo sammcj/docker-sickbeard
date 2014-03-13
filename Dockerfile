@@ -1,14 +1,14 @@
-FROM ubuntu:precise
-#Thanks to https://github.com/user419/docker-sickbeard and https://github.com/GeoffreyPlitt/docker-sickbeard
-MAINTAINER Tim Haak <tim@haak.co.uk>
+FROM debian:jessie
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get -q update
-RUN apt-get -qy --force-yes dist-upgrade
+RUN apt-get update && apt-get -y install curl && \
+    curl -s https://raw.githubusercontent.com/sammcj/docker-utils/master/apt-settings.sh | sh
 
-RUN apt-get install -qy --force-yes python-cheetah
+RUN apt-get -y install locales python-cheetah wget tar ca-certificates curl && \
+    locale-gen en_AU en_AU.UTF-8
 
-ADD https://github.com/midgetspy/Sick-Beard/tarball/master /
-RUN tar -xvf master -C /  && mv /midgetspy-Sick-Beard-* /sickbeard/ 
+RUN curl -L -O https://github.com/midgetspy/Sick-Beard/tarball/master && \
+    tar -xvf master -C /  && mv /midgetspy-Sick-Beard-* /sickbeard/ && rm master
 
 VOLUME /config
 VOLUME /data
