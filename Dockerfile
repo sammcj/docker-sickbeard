@@ -1,10 +1,7 @@
 FROM debian:jessie
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update && apt-get -y install curl && \
-    curl -s https://raw.githubusercontent.com/sammcj/docker-utils/master/apt-settings.sh | sh
-
-RUN apt-get -y install locales python-cheetah wget tar ca-certificates curl && \
+RUN apt-get update && apt-get -y install curl locales python-cheetah wget tar ca-certificates curl && \
     locale-gen en_AU en_AU.UTF-8
 
 RUN curl -L -O https://github.com/midgetspy/Sick-Beard/tarball/master && \
